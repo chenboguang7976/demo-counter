@@ -1,0 +1,47 @@
+import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    title: "Slint Counter Pro";
+    width: 400px;
+    height: 300px;
+
+    // Khai báo biến để hiển thị lên giao diện
+    in-out property <int> counter: 0;
+
+    // Khai báo tín hiệu (signal) gửi về cho Rust xử lý
+    callback request-increase();
+    callback request-reset();
+
+    VerticalBox {
+        padding: 20px;
+        spacing: 15px;
+
+        Text {
+            text: "Bộ Đếm Thông Minh";
+            font-size: 28px;
+            color: #2c3e50;
+            horizontal-alignment: center;
+        }
+
+        Text {
+            text: root.counter;
+            font-size: 60px;
+            font-weight: 800;
+            color: #3498db;
+            horizontal-alignment: center;
+        }
+
+        Button {
+            text: "TĂNG SỐ (+)";
+            primary: true;
+            height: 50px;
+            clicked => { root.request-increase(); }
+        }
+
+        Button {
+            text: "LÀM MỚI (RESET)";
+            height: 40px;
+            clicked => { root.request-reset(); }
+        }
+    }
+}
